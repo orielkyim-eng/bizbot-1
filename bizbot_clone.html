@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<title>BizBot</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --wa:#075E54;--wa2:#128C7E;--wa3:#25D366;--wa4:#dcf8c6;
+  --w:#ffffff;--bg:#ffffff;
+  --t:#075E54;--tm:#0a4f47;--ts:#4a8a80;
+  --b:rgba(7,94,84,0.12);--bs:rgba(7,94,84,0.25);
+  --sh:0 2px 16px rgba(7,94,84,0.08);--sh2:0 6px 32px rgba(7,94,84,0.12);--sh3:0 12px 48px rgba(7,94,84,0.16);
+  --r:16px;--rs:10px;--rpill:24px;
+  --red:#dc2626;--redbg:#fef2f2;
+  --amb:#d97706;--ambbg:#fffbeb;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--t);direction:rtl;}
+button,input,textarea,select{font-family:inherit;}
+a{text-decoration:none;}
+
+/* ─── LANDING ─── */
+#landing{min-height:100vh;background:#fff;}
+.lnav{display:flex;align-items:center;justify-content:space-between;padding:0 56px;height:64px;background:#fff;border-bottom:1px solid var(--b);position:sticky;top:0;z-index:99;}
+.logo{display:flex;align-items:center;gap:9px;}
+.logo-ic{width:32px;height:32px;background:var(--wa);border-radius:9px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:900;}
+.logo-tx{font-size:18px;font-weight:800;color:var(--wa);}
+.lbtn-login{padding:8px 20px;border-radius:var(--rpill);border:1.5px solid var(--bs);background:#fff;color:var(--wa);font-size:13px;font-weight:700;cursor:pointer;}
+.lbtn-cta{padding:9px 22px;border-radius:var(--rpill);border:none;background:var(--wa);color:#fff;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 2px 12px rgba(7,94,84,.25);}
+
+/* SEGMENT TOGGLE */
+.seg-wrap{display:flex;justify-content:center;padding:48px 20px 32px;}
+.seg{background:#fff;border:1.5px solid var(--bs);border-radius:var(--rpill);display:inline-flex;padding:3px;}
+.seg-btn{padding:9px 24px;border-radius:var(--rpill);font-size:13px;font-weight:700;border:none;cursor:pointer;transition:all .2s;color:var(--ts);background:transparent;}
+.seg-btn.on{background:var(--wa);color:#fff;box-shadow:0 2px 10px rgba(7,94,84,.3);}
+
+/* HERO */
+.hero{text-align:center;padding:0 20px 64px;max-width:820px;margin:0 auto;}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--bs);color:var(--wa);font-size:12px;font-weight:700;padding:5px 16px;border-radius:var(--rpill);margin-bottom:22px;}
+.hero h1{font-size:50px;font-weight:900;line-height:1.1;letter-spacing:-2px;margin-bottom:16px;color:var(--wa);}
+.hero p{font-size:16px;color:var(--ts);line-height:1.8;max-width:480px;margin:0 auto 32px;}
+.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:48px;}
+.btn-hero{padding:14px 36px;border-radius:var(--rpill);border:none;background:var(--wa);color:#fff;font-size:15px;font-weight:800;cursor:pointer;box-shadow:0 4px 20px rgba(7,94,84,.3);}
+.btn-hero-out{padding:13px 28px;border-radius:var(--rpill);border:1.5px solid var(--bs);background:#fff;color:var(--wa);font-size:15px;font-weight:700;cursor:pointer;}
+.stats-row{display:flex;max-width:580px;margin:0 auto;background:#fff;border-radius:var(--r);overflow:hidden;box-shadow:var(--sh2);}
+.stat{flex:1;padding:18px;text-align:center;border-left:1px solid var(--b);}
+.stat:last-child{border-left:none;}
+.stat-n{font-size:22px;font-weight:900;color:var(--wa);}
+.stat-l{font-size:11px;color:var(--ts);font-weight:600;margin-top:2px;}
+
+/* DEMO SECTION */
+.demo-wrap{padding:60px 24px;background:#fff;}
+.sec-label{text-align:center;font-size:10px;font-weight:800;color:var(--wa3);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
+.sec-title{text-align:center;font-size:28px;font-weight:900;color:var(--wa);letter-spacing:-1px;margin-bottom:36px;}
+.demo-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;max-width:860px;margin:0 auto;align-items:start;}
+.chat-widget{background:#fff;border-radius:var(--r);overflow:hidden;box-shadow:var(--sh3);}
+.cw-top{background:var(--wa);padding:14px 16px;display:flex;align-items:center;gap:11px;}
+.cw-av{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#fff;}
+.cw-name{font-size:14px;font-weight:800;color:#fff;}
+.cw-st{font-size:10px;color:rgba(255,255,255,.75);display:flex;align-items:center;gap:4px;}
+.cw-st::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--wa3);display:inline-block;animation:pulse 2s infinite;}
+.cw-msgs{background:#e5ddd5;padding:14px;height:270px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;}
+.cm{display:flex;flex-direction:column;}
+.cm.b{align-self:flex-start;max-width:82%;}
+.cm.u{align-self:flex-end;max-width:82%;align-items:flex-end;}
+.cm-b{padding:9px 12px;border-radius:10px;font-size:13px;line-height:1.5;}
+.cm.b .cm-b{background:#fff;border-bottom-right-radius:3px;color:#111;}
+.cm.u .cm-b{background:var(--wa4);border-bottom-left-radius:3px;color:#111;}
+.cm-t{font-size:10px;color:#999;margin-top:2px;padding:0 3px;}
+.cw-inp{background:#f0f0f0;padding:9px 11px;display:flex;gap:8px;align-items:center;}
+.cw-input{flex:1;border:none;border-radius:20px;padding:9px 14px;font-size:13px;outline:none;background:#fff;}
+.cw-send{width:36px;height:36px;border-radius:50%;background:var(--wa);border:none;color:#fff;font-size:14px;cursor:pointer;flex-shrink:0;}
+.cw-quick{background:#f0f0f0;padding:7px 11px;display:flex;gap:5px;flex-wrap:wrap;border-top:1px solid var(--b);}
+.cq{font-size:11px;padding:5px 11px;border-radius:var(--rpill);border:1.5px solid var(--bs);background:#fff;color:var(--wa);font-weight:600;cursor:pointer;}
+.cq:hover{background:var(--wa);color:#fff;border-color:var(--wa);}
+.feat-list{display:flex;flex-direction:column;gap:11px;}
+.feat-item{display:flex;gap:11px;padding:14px;background:#fff;border-radius:var(--r);border:1.5px solid var(--b);box-shadow:var(--sh);}
+.feat-ic{font-size:20px;flex-shrink:0;}
+.feat-title{font-size:13px;font-weight:700;color:var(--wa);}
+.feat-sub{font-size:12px;color:var(--ts);margin-top:2px;}
+
+/* PRICING */
+.pricing-wrap{padding:60px 24px;max-width:840px;margin:0 auto;}
+.trial-pill{display:inline-block;background:var(--wa);color:#fff;font-size:12px;font-weight:700;padding:5px 18px;border-radius:var(--rpill);margin-bottom:28px;}
+.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.plan{background:#fff;border:1.5px solid var(--b);border-radius:var(--r);padding:24px;text-align:center;transition:transform .2s;}
+.plan:hover{transform:translateY(-2px);box-shadow:var(--sh2);}
+.plan.best{border-color:var(--wa);box-shadow:var(--sh3);transform:translateY(-4px);}
+.plan-badge{display:inline-block;background:var(--wa);color:#fff;font-size:10px;font-weight:800;padding:3px 14px;border-radius:var(--rpill);margin-bottom:10px;}
+.plan-name{font-size:15px;font-weight:800;color:var(--wa);margin-bottom:8px;}
+.plan-price{font-size:30px;font-weight:900;color:var(--wa);}
+.plan-price small{font-size:12px;font-weight:400;color:var(--ts);}
+.plan-feats{font-size:11px;color:var(--tm);line-height:2.2;margin:14px 0;text-align:right;}
+.plan-feats span{color:var(--wa);font-weight:700;}
+.pfooter{background:var(--wa);color:rgba(255,255,255,.6);text-align:center;padding:20px;font-size:12px;}
+
+/* ─── APP ─── */
+#app{display:none;min-height:100vh;background:#fff;}
+.trial-bar{background:var(--wa);color:#fff;padding:7px 16px;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;position:sticky;top:0;z-index:89;}
+.tpill{background:rgba(255,255,255,.2);padding:2px 10px;border-radius:var(--rpill);font-weight:800;}
+.tbar-btn{background:rgba(255,255,255,.2);border:none;color:#fff;font-size:10px;font-weight:700;padding:2px 10px;border-radius:var(--rpill);cursor:pointer;}
+.mh{display:none;background:#fff;border-bottom:1px solid var(--b);padding:10px 14px;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:90;}
+.hbg{width:36px;height:36px;border-radius:var(--rs);border:1.5px solid var(--bs);background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;}
+.hbg span{width:14px;height:2px;background:var(--wa);border-radius:2px;display:block;}
+.mov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:95;}
+.mov.on{display:block;}
+.sb{position:fixed;right:0;top:0;height:100vh;width:210px;background:#fff;border-left:1px solid var(--b);display:flex;flex-direction:column;z-index:100;box-shadow:var(--sh2);}
+.sb-logo{padding:16px 14px;border-bottom:1px solid var(--b);display:flex;align-items:center;gap:8px;}
+.sb-ic{width:28px;height:28px;background:var(--wa);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:900;}
+.sb-tx{font-size:16px;font-weight:800;color:var(--wa);}
+.sb-close{margin-right:auto;width:24px;height:24px;border-radius:6px;border:1.5px solid var(--b);font-size:11px;color:var(--ts);display:none;align-items:center;justify-content:center;cursor:pointer;background:#fff;}
+.persona-box{padding:9px 12px;border-bottom:1px solid var(--b);}
+.persona-lbl{font-size:9px;font-weight:700;color:var(--ts);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;}
+.sb-nav{padding:7px;flex:1;overflow-y:auto;}
+.ni{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--rs);font-size:13px;color:var(--ts);font-weight:500;margin-bottom:1px;cursor:pointer;transition:all .15s;}
+.ni:hover{background:rgba(7,94,84,.05);}
+.ni.on{background:var(--wa);color:#fff;font-weight:700;}
+.ni.on .ic{color:#fff;}
+.ni .ic{font-size:13px;width:16px;text-align:center;color:var(--ts);}
+.nb{margin-right:auto;background:var(--red);color:#fff;font-size:9px;font-weight:800;padding:1px 6px;border-radius:10px;}
+.sb-foot{padding:9px;border-top:1px solid var(--b);}
+.sb-user{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--rs);background:rgba(7,94,84,.05);border:1px solid var(--b);}
+.sb-av{width:28px;height:28px;border-radius:50%;background:var(--wa);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;}
+.sb-un{font-size:12px;font-weight:700;color:var(--wa);}
+.sb-up{font-size:10px;color:var(--ts);}
+.main{margin-right:210px;min-height:100vh;}
+.topbar{background:#fff;border-bottom:1px solid var(--b);padding:11px 22px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.pg-title{font-size:15px;font-weight:800;color:var(--wa);}
+.pg-sub{font-size:11px;color:var(--ts);margin-top:1px;}
+.tb-r{display:flex;align-items:center;gap:8px;}
+.bot-tog{display:flex;align-items:center;gap:7px;border:1.5px solid var(--bs);border-radius:var(--rpill);padding:6px 12px;cursor:pointer;}
+.tog-tr{width:36px;height:20px;border-radius:10px;background:var(--wa3);position:relative;transition:background .25s;flex-shrink:0;}
+.tog-tr.off{background:#d1d5db;}
+.tog-th{position:absolute;top:2px;right:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .25s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+.tog-tr.off .tog-th{transform:translateX(-16px);}
+.tog-lbl{font-size:11px;font-weight:700;color:var(--wa);}
+.tog-dot{width:6px;height:6px;border-radius:50%;background:var(--wa3);animation:pulse 2s infinite;}
+.tog-dot.off{background:#d1d5db;animation:none;}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--rpill);font-size:12px;font-weight:700;border:none;cursor:pointer;transition:all .15s;}
+.btn-p{background:var(--wa);color:#fff;box-shadow:0 2px 10px rgba(7,94,84,.25);}
+.btn-p:hover{background:var(--wa2);transform:translateY(-1px);}
+.btn-s{background:#fff;color:var(--wa);border:1.5px solid var(--bs);}
+.btn-s:hover{background:rgba(7,94,84,.04);}
+.content{padding:20px 22px;}
+.page{display:none;}.page.on{display:block;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.card{background:#fff;border-radius:var(--r);box-shadow:var(--sh2);margin-bottom:14px;overflow:hidden;}
+.card-line{border-top:3px solid var(--wa);}
+.ch{padding:13px 16px 11px;border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:7px;}
+.ct{font-size:13px;font-weight:800;color:var(--wa);}
+.cs{font-size:11px;color:var(--ts);margin-top:1px;}
+.cb{padding:14px 16px;}
+.kpi-g{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
+.kpi{background:#fff;border-radius:var(--r);padding:15px;box-shadow:var(--sh2);border-top:3px solid var(--wa);}
+.kpi-ic{font-size:18px;margin-bottom:8px;}
+.kpi-v{font-size:22px;font-weight:900;color:var(--wa);}
+.kpi-l{font-size:11px;color:var(--ts);margin-top:2px;}
+.fg{display:flex;flex-direction:column;gap:4px;margin-bottom:10px;}
+.fl{font-size:11px;font-weight:700;color:var(--ts);}
+.fi{border:1.5px solid var(--b);border-radius:var(--rs);padding:9px 12px;font-size:13px;outline:none;background:#fff;color:var(--t);width:100%;transition:border .15s;}
+.fi:focus{border-color:var(--wa);}
+.fta{border:1.5px solid var(--b);border-radius:var(--rs);padding:9px 12px;font-size:13px;outline:none;background:#fff;color:var(--t);resize:vertical;min-height:70px;width:100%;direction:rtl;transition:border .15s;}
+.fta:focus{border-color:var(--wa);}
+.fsel{border:1.5px solid var(--b);border-radius:var(--rs);padding:9px 12px;font-size:13px;outline:none;background:#fff;color:var(--t);width:100%;cursor:pointer;}
+.fsel:focus{border-color:var(--wa);}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+/* CHAT */
+.chat-box{border-radius:var(--r);overflow:hidden;box-shadow:var(--sh2);}
+.ct-top{background:var(--wa);padding:12px 15px;display:flex;align-items:center;gap:10px;}
+.ct-av{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;}
+.ct-name{font-size:13px;font-weight:800;color:#fff;}
+.ct-st{font-size:9px;color:rgba(255,255,255,.75);display:flex;align-items:center;gap:3px;}
+.ct-st::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--wa3);display:inline-block;animation:pulse 2s infinite;}
+.ct-pln{margin-right:auto;background:rgba(255,255,255,.15);color:#fff;font-size:10px;font-weight:700;padding:2px 9px;border-radius:var(--rpill);}
+.ct-msgs{background:#e5ddd5;padding:12px;height:310px;overflow-y:auto;display:flex;flex-direction:column;gap:7px;}
+.msg{display:flex;flex-direction:column;}
+.msg.bot{align-self:flex-start;max-width:82%;}
+.msg.user{align-self:flex-end;max-width:82%;align-items:flex-end;}
+.mb{padding:9px 12px;border-radius:10px;font-size:13px;line-height:1.5;}
+.msg.bot .mb{background:#fff;border-bottom-right-radius:3px;color:#111;}
+.msg.user .mb{background:var(--wa4);border-bottom-left-radius:3px;color:#111;font-weight:500;}
+.mt{font-size:10px;color:#999;margin-top:2px;padding:0 4px;}
+.ct-inbar{background:#f0f0f0;padding:9px 11px;display:flex;gap:8px;align-items:center;}
+.ct-in{flex:1;border:none;border-radius:20px;padding:9px 14px;font-size:13px;outline:none;background:#fff;direction:rtl;}
+.ct-send{width:34px;height:34px;border-radius:50%;background:var(--wa);border:none;color:#fff;font-size:13px;cursor:pointer;flex-shrink:0;}
+
+/* APPT */
+.appt-row{display:flex;align-items:center;gap:9px;padding:10px 12px;background:#fff;border:1.5px solid var(--b);border-radius:var(--rs);margin-bottom:7px;transition:border .15s;}
+.appt-row:hover{border-color:var(--wa);}
+.appt-time{font-size:12px;font-weight:800;color:var(--wa);min-width:38px;text-align:center;}
+.appt-div{width:1px;height:22px;background:var(--b);}
+.appt-name{font-size:13px;font-weight:700;color:var(--wa);}
+.appt-svc{font-size:11px;color:var(--ts);}
+.appt-badge{margin-right:auto;font-size:10px;font-weight:700;padding:2px 8px;border-radius:var(--rpill);background:rgba(7,94,84,.08);color:var(--wa);}
+.del-appt{background:var(--redbg);color:var(--red);border:1px solid rgba(220,38,38,.2);border-radius:6px;padding:4px 8px;font-size:11px;font-weight:700;cursor:pointer;flex-shrink:0;}
+
+/* CALENDAR */
+.cal-g{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
+.cal-h{font-size:9px;font-weight:700;color:var(--ts);text-align:center;padding:3px 0;}
+.cd{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:8px;font-size:11px;cursor:pointer;transition:all .2s;position:relative;color:var(--t);gap:2px;}
+.cd:hover{transform:scale(1.08);z-index:1;}
+.cd-num{font-size:11px;font-weight:600;line-height:1;}
+.cd-count{font-size:9px;font-weight:800;line-height:1;margin-top:1px;}
+.cd.ha{background:rgba(7,94,84,.1);border:1px solid rgba(7,94,84,.2);}
+.cd.ha .cd-num{color:var(--wa);font-weight:800;}
+.cd.ha .cd-count{color:var(--wa);}
+.cd.busy3{background:rgba(217,119,6,.1);border:1px solid rgba(217,119,6,.25);}
+.cd.busy3 .cd-num{color:var(--amb);}
+.cd.busy3 .cd-count{color:var(--amb);}
+.cd.busy5{background:rgba(220,38,38,.1);border:1px solid rgba(220,38,38,.2);}
+.cd.busy5 .cd-num{color:var(--red);}
+.cd.busy5 .cd-count{color:var(--red);}
+.cd.today{background:var(--wa)!important;color:#fff!important;font-weight:800;border:none!important;box-shadow:0 2px 10px rgba(7,94,84,.4);}
+.cd.today .cd-num{color:#fff!important;}
+.cd.today .cd-count{color:rgba(255,255,255,.8)!important;}
+.cd.selected{outline:2.5px solid var(--wa);outline-offset:1px;}
+.cd.today.selected{outline:2.5px solid rgba(255,255,255,.6);}
+.cd.past{opacity:.4;cursor:default;}
+.cd.past:hover{transform:none;}
+.cd.other{opacity:.3;}
+
+/* DRAWER */
+.appt-drawer{background:#fff;border-radius:var(--r);box-shadow:var(--sh3);overflow:hidden;max-height:0;transition:max-height .35s cubic-bezier(.4,0,.2,1),opacity .25s;opacity:0;}
+.appt-drawer.open{max-height:600px;opacity:1;}
+.drawer-head{background:var(--wa);padding:11px 16px;display:flex;align-items:center;justify-content:space-between;}
+.drawer-title{font-size:13px;font-weight:800;color:#fff;}
+.drawer-badge{font-size:10px;font-weight:700;background:rgba(255,255,255,.2);color:#fff;padding:2px 8px;border-radius:var(--rpill);}
+.drawer-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--b);transition:background .15s;}
+.drawer-row:hover{background:rgba(7,94,84,.04);}
+.drawer-row:last-child{border-bottom:none;}
+.drawer-time{font-size:12px;font-weight:800;color:var(--wa);min-width:40px;}
+.drawer-name{font-size:13px;font-weight:700;color:var(--t);flex:1;}
+.drawer-svc{font-size:11px;color:var(--ts);}
+.drawer-send{font-size:11px;font-weight:700;color:var(--wa);background:rgba(7,94,84,.08);border:1px solid var(--b);border-radius:var(--rpill);padding:4px 10px;cursor:pointer;font-family:inherit;flex-shrink:0;}
+.drawer-empty{padding:24px;text-align:center;color:var(--ts);}
+
+/* DEALS */
+.deal-tog{width:34px;height:18px;border-radius:9px;background:var(--wa);border:none;position:relative;transition:background .2s;cursor:pointer;flex-shrink:0;}
+.deal-tog::after{content:'';position:absolute;top:1px;right:1px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+.deal-tog.off{background:#d1d5db;}
+.deal-tog.off::after{transform:translateX(-16px);}
+
+/* ALERTS */
+.ali{display:flex;gap:9px;padding:12px;border-radius:var(--rs);margin-bottom:7px;border:1.5px solid rgba(220,38,38,.25);background:var(--redbg);}
+.ali-dot{width:7px;height:7px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:4px;}
+
+/* EMPTY */
+.empty{text-align:center;padding:28px 16px;}
+.ei{font-size:28px;margin-bottom:9px;opacity:.4;}
+.et{font-size:13px;font-weight:700;color:var(--ts);margin-bottom:3px;}
+.es{font-size:12px;color:var(--ts);line-height:1.6;}
+
+/* TOAST */
+.toast{position:fixed;bottom:18px;left:18px;background:var(--wa);color:#fff;padding:10px 18px;border-radius:var(--rpill);font-size:13px;font-weight:600;box-shadow:var(--sh3);transform:translateY(70px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);z-index:999;}
+.toast.on{transform:translateY(0);opacity:1;}
+
+/* LOCK */
+.lock-ov{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.lock-ov.on{display:flex;}
+.lock-card{background:#fff;border-radius:var(--r);padding:30px;max-width:420px;width:92%;text-align:center;box-shadow:var(--sh3);}
+.lp-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0;}
+.lp{padding:16px;border-radius:var(--r);border:1.5px solid var(--b);cursor:pointer;text-align:center;transition:all .15s;}
+.lp:hover{border-color:var(--wa);}
+.lp.f{border-color:var(--wa);background:rgba(7,94,84,.04);}
+.lp-name{font-size:13px;font-weight:800;color:var(--wa);margin-bottom:4px;}
+.lp-price{font-size:20px;font-weight:900;color:var(--wa);}
+
+/* CRM LANG TOGGLE */
+.lang-tog{width:34px;height:18px;border-radius:9px;background:var(--wa);border:none;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;}
+.lang-tog::after{content:'';position:absolute;top:1px;right:1px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+.lang-tog.off{background:#d1d5db;}
+.lang-tog.off::after{transform:translateX(-16px);}
+
+/* SCAN ZONE */
+.scan-zone{background:#fff;border:1.5px dashed var(--bs);border-radius:var(--r);padding:18px;text-align:center;margin-bottom:14px;}
+
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
+@media(max-width:768px){
+  .lnav{padding:0 14px;}
+  .hero h1{font-size:30px;}
+  .demo-grid{grid-template-columns:1fr;}
+  .plans-grid{grid-template-columns:1fr;}
+  .stats-row{flex-direction:column;}
+  .stat{border-left:none;border-bottom:1px solid var(--b);}
+  .stat:last-child{border-bottom:none;}
+  .sb{transform:translateX(105%);transition:transform .28s;}
+  .sb.open{transform:translateX(0);box-shadow:-4px 0 30px rgba(0,0,0,.15);}
+  .main{margin-right:0;}
+  .mh{display:flex;}
+  .topbar{display:none;}
+  .content{padding:11px;}
+  .kpi-g{grid-template-columns:1fr 1fr;gap:9px;}
+  .g2{grid-template-columns:1fr;}
+  .fr{grid-template-columns:1fr;}
+  .ct-msgs{height:220px;}
+}
+
+/* OTP MODAL */
+.otp-ov{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px);}
+.otp-ov.on{display:flex;}
+.otp-card{background:#fff;border-radius:20px;padding:32px 28px;max-width:380px;width:92%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.2);}
+.otp-ic{font-size:44px;margin-bottom:12px;}
+.otp-title{font-size:20px;font-weight:900;color:var(--wa);margin-bottom:6px;}
+.otp-sub{font-size:13px;color:var(--ts);margin-bottom:22px;line-height:1.6;}
+.otp-methods{display:flex;gap:10px;margin-bottom:20px;}
+.otp-method{flex:1;padding:14px;border-radius:var(--r);border:1.5px solid var(--b);cursor:pointer;transition:all .15s;background:#fff;}
+.otp-method:hover{border-color:var(--wa);}
+.otp-method.sel{border-color:var(--wa);background:rgba(7,94,84,.05);}
+.otp-method-ic{font-size:22px;margin-bottom:6px;}
+.otp-method-lbl{font-size:12px;font-weight:700;color:var(--wa);}
+.otp-method-sub{font-size:10px;color:var(--ts);margin-top:2px;}
+.otp-input-wrap{margin-bottom:14px;}
+.otp-input{width:100%;border:1.5px solid var(--b);border-radius:var(--rs);padding:11px 14px;font-size:14px;outline:none;font-family:inherit;text-align:center;direction:ltr;transition:border .15s;}
+.otp-input:focus{border-color:var(--wa);}
+.otp-digits{display:flex;gap:8px;justify-content:center;margin-bottom:18px;}
+.otp-digit{width:44px;height:52px;border:1.5px solid var(--b);border-radius:10px;font-size:22px;font-weight:800;text-align:center;outline:none;font-family:inherit;color:var(--wa);transition:border .15s;}
+.otp-digit:focus{border-color:var(--wa);box-shadow:0 0 0 3px rgba(7,94,84,.1);}
+.otp-status{font-size:12px;margin-bottom:14px;min-height:18px;font-weight:600;}
+.otp-status.err{color:var(--red);}
+.otp-status.ok{color:var(--wa);}
+.otp-resend{font-size:12px;color:var(--ts);cursor:pointer;margin-top:10px;}
+.otp-resend span{color:var(--wa);font-weight:700;text-decoration:underline;}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init('T9SXgCUkhKniDq9j9');</script>
+</head>
+<body>
+
+<!-- ═════════════ LANDING ═════════════ -->
+<div id="landing">
+  <nav class="lnav">
+    <div class="logo"><div class="logo-ic">B</div><div class="logo-tx">BizBot</div></div>
+    <div style="display:flex;gap:8px">
+      <button class="lbtn-login" onclick="loginDirect()">כניסה</button>
+      <button class="lbtn-cta" onclick="openApp()">התחל חינם ←</button>
+    </div>
+  </nav>
+
+  <div class="seg-wrap">
+    <div class="seg">
+      <button class="seg-btn on" id="seg-biz" onclick="setSeg('biz')">🏪 לעסקים רגילים</button>
+      <button class="seg-btn" id="seg-gov" onclick="setSeg('gov')">🏦 לארגונים וגופים ממשלתיים</button>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-badge">✦ 14 יום PRO חינמי — ללא כרטיס אשראי</div>
+    <h1 id="heroTitle">בוט וואטסאפ שמוכר,<br>מנהל, וזוכר הכל</h1>
+    <p id="heroDesc">BizBot עונה ללקוחות 24/7, קובע תורים, מציג מחירים — הכל אוטומטי.</p>
+    <div class="hero-cta">
+      <button class="btn-hero" id="heroCTA" onclick="openApp()">🚀 התחל 14 ימי ניסיון PRO</button>
+      <button class="btn-hero-out" onclick="document.getElementById('demo-sec').scrollIntoView({behavior:'smooth'})">💬 ראה הדגמה ↓</button>
+    </div>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-n">24/7</div><div class="stat-l">מענה אוטומטי</div></div>
+      <div class="stat"><div class="stat-n">14 יום</div><div class="stat-l">ניסיון PRO חינם</div></div>
+      <div class="stat"><div class="stat-n">5 דק'</div><div class="stat-l">זמן הקמה</div></div>
+      <div class="stat"><div class="stat-n">∞</div><div class="stat-l">שאלות שהבוט מבין</div></div>
+    </div>
+  </div>
+
+  <!-- DEMO -->
+  <div class="demo-wrap" id="demo-sec">
+    <div class="sec-label">הדגמה חיה</div>
+    <div class="sec-title">חוויית הלקוח החדשה של העסק שלך</div>
+    <div class="demo-grid">
+      <div class="chat-widget">
+        <div class="cw-top">
+          <div class="cw-av">B</div>
+          <div><div class="cw-name">BizBot</div><div class="cw-st">מחובר עכשיו</div></div>
+        </div>
+        <div class="cw-msgs" id="demoChatMsgs">
+          <div class="cm b"><div class="cm-b">היי! 👋 אני BizBot. שאל אותי — אענה מיד!</div><div class="cm-t">עכשיו</div></div>
+        </div>
+        <div class="cw-inp">
+          <input class="cw-input" id="demoInput" placeholder="שאל משהו..." onkeydown="if(event.key==='Enter')demoSend()" autocomplete="off" dir="rtl"/>
+          <button class="cw-send" onclick="demoSend()">➤</button>
+        </div>
+        <div class="cw-quick">
+          <button class="cq" onclick="demoQ('כמה עולה?')">💰 מחיר</button>
+          <button class="cq" onclick="demoQ('יש מבצעים?')">🏷️ מבצע</button>
+          <button class="cq" onclick="demoQ('רוצה תור')">📅 תור</button>
+          <button class="cq" onclick="demoQ('מה השעות?')">🕐 שעות</button>
+        </div>
+      </div>
+      <div class="feat-list">
+        <div class="feat-item"><div class="feat-ic">🤖</div><div><div class="feat-title">AI שמבין הכל</div><div class="feat-sub">עברית, ערבית, אנגלית, שגיאות כתיב</div></div></div>
+        <div class="feat-item"><div class="feat-ic">💰</div><div><div class="feat-title">מחירון חכם</div><div class="feat-sub">הבוט שולח בדיוק את המחירון שלך</div></div></div>
+        <div class="feat-item"><div class="feat-ic">🌍</div><div><div class="feat-title">ריבוי שפות</div><div class="feat-sub">עונה בשפת הלקוח אוטומטית</div></div></div>
+        <div class="feat-item"><div class="feat-ic">🚨</div><div><div class="feat-title">התראות לקוחות</div><div class="feat-sub">לקוח כועס? קבל התראה מיידית</div></div></div>
+        <button class="btn-hero" style="width:100%;justify-content:center" onclick="openApp()">🚀 התחל ניסיון חינם</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRICING -->
+  <div class="pricing-wrap" id="pricing-sec">
+    <div class="sec-label">תוכניות</div>
+    <div class="sec-title">השקעה שבונה לך עסק</div>
+    <div style="text-align:center;margin-bottom:28px"><span class="trial-pill">🎁 כל לקוח חדש מתחיל עם 14 ימי PRO מלא</span></div>
+    <div class="plans-grid">
+      <div class="plan">
+        <div class="plan-name">🌱 חינמי</div>
+        <div class="plan-price">₪0<small>/חודש</small></div>
+        <div class="plan-feats"><span>✓</span> 100 שיחות בחודש<br><span>✓</span> מחירון בסיסי<br><span>✓</span> קביעת תורים<br>✗ AI מתקדם<br>✗ ריבוי שפות<br>✗ התראות</div>
+        <button class="btn btn-s" style="width:100%;justify-content:center" onclick="openApp()">התחל</button>
+      </div>
+      <div class="plan best">
+        <div class="plan-badge">⭐ הכי פופולרי</div>
+        <div class="plan-name">🚀 PRO</div>
+        <div class="plan-price">₪149<small>/חודש</small></div>
+        <div class="plan-feats"><span>✓</span> שיחות ללא הגבלה<br><span>✓</span> AI מתקדם<br><span>✓</span> מחירון + מבצעים<br><span>✓</span> ריבוי שפות<br><span>✓</span> התראות + CRM<br><span>✓</span> שימור לקוחות</div>
+        <button class="btn btn-p" style="width:100%;justify-content:center" onclick="openApp()">התחל 14 ימי ניסיון PRO ←</button>
+      </div>
+      <div class="plan">
+        <div class="plan-name">🏦 Enterprise</div>
+        <div class="plan-price" style="font-size:18px;margin:10px 0">צור קשר</div>
+        <div class="plan-feats"><span>✓</span> עיריות, בנקים, ממשלה<br><span>✓</span> White Label<br><span>✓</span> SLA + אבטחה מלאה<br><span>✓</span> On-premise<br><span>✓</span> הדרכה אישית<br><span>✓</span> ליווי אישי</div>
+        <button class="btn btn-s" style="width:100%;justify-content:center" onclick="showToast('📞 ניצור קשר תוך 24 שעות!')">תיאום פגישת אפיון</button>
+      </div>
+    </div>
+  </div>
+  <div class="pfooter">© 2025 BizBot · כל הזכויות שמורות</div>
+</div>
+
+<!-- ═════════════ APP ═════════════ -->
+<div id="app">
+  <div class="trial-bar"><span>✦ אתה בגרסת PRO —</span><span class="tpill" id="trialLeft">נותרו 14 ימים לניסיון</span><button class="tbar-btn" onclick="showLock()">שדרג עכשיו</button></div>
+
+  <div class="mh">
+    <div class="hbg" onclick="openSB()"><span></span><span></span><span></span></div>
+    <div class="logo" style="gap:7px"><div class="logo-ic" style="width:26px;height:26px;font-size:11px">B</div><div class="logo-tx" style="font-size:15px">BizBot</div></div>
+    <div onclick="toggleBot()" style="cursor:pointer"><div id="mTog" style="width:32px;height:18px;border-radius:9px;background:var(--wa3);position:relative;transition:background .25s"><div id="mThumb" style="position:absolute;top:1px;right:1px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .25s"></div></div></div>
+  </div>
+
+  <div class="mov" id="mov" onclick="closeSB()"></div>
+
+  <aside class="sb" id="sb">
+    <div class="sb-logo"><div class="sb-ic">B</div><div class="sb-tx">BizBot</div><button class="sb-close" id="sbClose" onclick="closeSB()">✕</button></div>
+    <div class="persona-box">
+      <div class="persona-lbl">מצב פעיל</div>
+      <div style="display:flex;align-items:center;padding:5px 0">
+        <span id="personaCurrent" style="font-size:13px;font-weight:700;color:var(--wa)">🏪 עסקי</span>
+      </div>
+    </div>
+    <nav class="sb-nav">
+      <div class="ni on" onclick="nav(this,'dash')"><span class="ic">📊</span> לוח בקרה</div>
+      <div class="ni" onclick="nav(this,'cal')"><span class="ic">📅</span> יומן</div>
+      <div class="ni" onclick="nav(this,'alerts')"><span class="ic">🚨</span> התראות<span class="nb" id="alertBadge" style="display:none">0</span></div>
+      <div class="ni" onclick="nav(this,'sim')"><span class="ic">💬</span> סימולטור</div>
+      <div class="ni" onclick="nav(this,'crm')"><span class="ic">👥</span> לקוחות</div>
+      <div class="ni" onclick="nav(this,'catalog')"><span class="ic">📋</span> מחירון ומבצעים</div>
+      <div class="ni" onclick="nav(this,'settings')"><span class="ic">⚙️</span> הגדרות עסק</div>
+      <div class="ni" onclick="nav(this,'connect')"><span class="ic">📱</span> חיבור וואטסאפ</div>
+    </nav>
+    <div class="sb-foot">
+      <div class="sb-user"><div class="sb-av">א</div><div><div class="sb-un" id="sbName">העסק שלי</div><div class="sb-up" id="sbPlan">✦ PRO Trial</div></div></div>
+      <button onclick="goLanding()" style="width:100%;margin-top:8px;padding:8px;border-radius:var(--rpill);border:1.5px solid var(--b);background:transparent;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;color:var(--ts);display:flex;align-items:center;justify-content:center;gap:6px">← חזור לדף הבית</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div><div class="pg-title" id="pgTitle">לוח בקרה</div><div class="pg-sub" id="pgSub">סקירה כללית</div></div>
+      <div class="tb-r">
+        <div id="pBadge" style="font-size:10px;font-weight:700;border:1.5px solid var(--bs);color:var(--wa);padding:3px 10px;border-radius:var(--rpill)">🏪 עסקי</div>
+        <div class="bot-tog" onclick="toggleBot()"><div class="tog-tr" id="togTr"><div class="tog-th"></div></div><span class="tog-lbl" id="togLbl">בוט פעיל</span><span class="tog-dot" id="togDot"></span></div>
+        <button class="btn btn-p" onclick="nav(null,'connect')">הפעל וואטסאפ</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <!-- DASHBOARD -->
+      <div id="page-dash" class="page on">
+        <div class="kpi-g">
+          <div class="kpi"><div class="kpi-ic">💬</div><div class="kpi-v" id="k-chats">0</div><div class="kpi-l">שיחות</div></div>
+          <div class="kpi"><div class="kpi-ic">📅</div><div class="kpi-v" id="k-appts">0</div><div class="kpi-l">תורים</div></div>
+          <div class="kpi"><div class="kpi-ic">💰</div><div class="kpi-v" id="k-rev">₪0</div><div class="kpi-l">הכנסות</div></div>
+          <div class="kpi"><div class="kpi-ic">🚨</div><div class="kpi-v" id="k-alerts" style="color:var(--ts)">0</div><div class="kpi-l">התראות</div></div>
+        </div>
+        <div class="g2">
+          <div class="card card-line">
+            <div class="ch"><div><div class="ct">תורים היום</div><div class="cs" id="todaySub"></div></div><button class="btn btn-p" style="font-size:11px" onclick="addApptP()">+ תור</button></div>
+            <div class="cb" id="todayAppts"><div class="empty"><div class="ei">📅</div><div class="et">אין תורים</div><div class="es">קבע תור ראשון</div></div></div>
+          </div>
+          <div class="card card-line">
+            <div class="ch"><div class="ct">🚀 שלבי הפעלה</div></div>
+            <div class="cb" style="display:flex;flex-direction:column;gap:8px">
+              <div onclick="nav(null,'settings')" style="display:flex;align-items:center;gap:9px;padding:11px;border-radius:var(--rs);border:1.5px solid var(--bs);cursor:pointer"><span style="font-size:16px">⚙️</span><div><div style="font-size:12px;font-weight:700;color:var(--wa)">1. הגדר את העסק</div><div style="font-size:10px;color:var(--ts)">שם, שעות, מידע לבוט</div></div></div>
+              <div onclick="nav(null,'catalog')" style="display:flex;align-items:center;gap:9px;padding:11px;border-radius:var(--rs);border:1.5px solid var(--b);cursor:pointer"><span style="font-size:16px">📋</span><div><div style="font-size:12px;font-weight:700;color:var(--wa)">2. הוסף מחירון ומבצעים</div><div style="font-size:10px;color:var(--ts)">הבוט יציג ללקוחות</div></div></div>
+              <div onclick="nav(null,'connect')" style="display:flex;align-items:center;gap:9px;padding:11px;border-radius:var(--rs);border:1.5px solid var(--b);cursor:pointer"><span style="font-size:16px">📱</span><div><div style="font-size:12px;font-weight:700;color:var(--wa)">3. חבר לוואטסאפ</div><div style="font-size:10px;color:var(--ts)">בלחיצה אחת</div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CALENDAR -->
+      <div id="page-cal" class="page">
+        <div class="g2">
+          <div class="card card-line">
+            <div class="ch"><div class="ct" id="calMonthTitle"></div><div style="display:flex;gap:5px"><button class="btn btn-s" style="padding:5px 9px" onclick="changeMonth(-1)">›</button><button class="btn btn-s" style="padding:5px 9px" onclick="changeMonth(1)">‹</button></div></div>
+            <div class="cb">
+              <div class="cal-g" style="margin-bottom:3px"><div class="cal-h">א</div><div class="cal-h">ב</div><div class="cal-h">ג</div><div class="cal-h">ד</div><div class="cal-h">ה</div><div class="cal-h">ו</div><div class="cal-h">ש</div></div>
+              <div class="cal-g" id="calDays"></div>
+            </div>
+          </div>
+          <div class="card card-line">
+            <div class="ch"><div class="ct" id="calDayT">בחר יום</div><button class="btn btn-p" style="font-size:11px" onclick="addApptP()">+ תור</button></div>
+            <div class="cb" id="calAppts"><div class="empty"><div class="ei">📅</div><div class="et">בחר יום</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ALERTS -->
+      <div id="page-alerts" class="page">
+        <div class="card card-line">
+          <div class="ch"><div><div class="ct">🚨 התראות</div><div class="cs">לקוחות דורשים תשומת לב</div></div></div>
+          <div class="cb"><div class="empty" id="alertsEmpty"><div class="ei">✅</div><div class="et">אין התראות</div><div class="es">כשהבוט יזהה לקוח כועס<br>תקבל התראה כאן</div></div><div id="alertsList"></div></div>
+        </div>
+      </div>
+
+      <!-- SIMULATOR -->
+      <div id="page-sim" class="page">
+        <div class="g2">
+          <div class="chat-box">
+            <div class="ct-top">
+              <div class="ct-av">B</div>
+              <div><div class="ct-name" id="chatName">BizBot</div><div class="ct-st" id="chatPersonaLbl">🏪 עסקי · פעיל</div></div>
+              <div class="ct-pln">PRO</div>
+            </div>
+            <div class="ct-msgs" id="chatMsgs">
+              <div class="msg bot"><div class="mb" id="welcomeMsg">היי! 👋 איך אפשר לעזור?</div><div class="mt">עכשיו</div></div>
+            </div>
+            <div class="ct-inbar">
+              <input class="ct-in" id="chatIn" placeholder="כתוב הודעה..." onkeydown="if(event.key==='Enter')sendMsg()" autocomplete="off"/>
+              <button class="ct-send" onclick="sendMsg()">➤</button>
+            </div>
+          </div>
+          <div class="card card-line">
+            <div class="ch"><div class="ct">בדיקות מהירות</div></div>
+            <div class="cb" style="display:flex;flex-direction:column;gap:7px">
+              <button class="btn btn-s" style="justify-content:flex-start;border-radius:var(--rpill)" onclick="quickTest('כמה עולה?')">💰 שאלת מחיר</button>
+              <button class="btn btn-s" style="justify-content:flex-start;border-radius:var(--rpill)" onclick="quickTest('יש מבצעים?')">🏷️ מבצעים</button>
+              <button class="btn btn-s" style="justify-content:flex-start;border-radius:var(--rpill)" onclick="quickTest('רוצה לקבוע תור')">📅 קביעת תור</button>
+              <button class="btn btn-s" style="justify-content:flex-start;border-radius:var(--rpill)" onclick="quickTest('מה שעות הפתיחה?')">🕐 שעות</button>
+              <button class="btn btn-s" style="justify-content:flex-start;border-radius:var(--rpill)" onclick="quickTest('אני לא מרוצה בכלל')">😠 לקוח כועס</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CRM -->
+      <div id="page-crm" class="page">
+        <div class="g2">
+          <div class="card card-line">
+            <div class="ch"><div><div class="ct">👥 לקוחות ושימור</div><div class="cs">לקוחות לא פעילים — שלח הודעה</div></div><button class="btn btn-p" style="font-size:11px" onclick="addManualCustomer()">+ לקוח</button></div>
+            <div class="cb" style="padding:0"><div id="crmList" style="max-height:360px;overflow-y:auto"><div class="empty" id="crmEmpty"><div class="ei">👥</div><div class="et">אין לקוחות</div><div class="es">ייאספו אוטומטית מתורים</div></div></div></div>
+          </div>
+          <div>
+            <div class="card card-line" style="margin-bottom:14px">
+              <div class="ch"><div><div class="ct">📊 סיכום יומי</div><div class="cs">מה קרה היום</div></div><button class="btn btn-p" style="font-size:11px" onclick="generateDailySummary()">צור סיכום</button></div>
+              <div class="cb">
+                <div id="dailySummaryBox" style="background:rgba(7,94,84,.04);border:1.5px solid var(--b);border-radius:var(--rs);padding:12px;font-size:13px;line-height:1.9;color:var(--tm);min-height:60px">לחץ "צור סיכום" לראות את סיכום היום</div>
+                <div onclick="copySummary()" style="color:var(--wa);font-size:12px;font-weight:700;cursor:pointer;margin-top:10px;display:inline-flex;align-items:center;gap:5px">📋 העתק סיכום לשליחה</div>
+              </div>
+            </div>
+            <div class="card card-line">
+              <div class="ch"><div class="ct">🌍 ריבוי שפות</div></div>
+              <div class="cb" style="display:flex;flex-direction:column;gap:8px">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--b)"><div style="display:flex;align-items:center;gap:8px"><span>🇮🇱</span><span style="font-size:13px;font-weight:600;color:var(--wa)">עברית</span></div><span style="font-size:10px;font-weight:700;background:rgba(7,94,84,.1);color:var(--wa);padding:2px 9px;border-radius:var(--rpill)">ברירת מחדל</span></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--b)"><div style="display:flex;align-items:center;gap:8px"><span>🇸🇦</span><span style="font-size:13px;font-weight:600;color:var(--wa)">ערבית</span></div><button class="lang-tog" id="lang-ar" onclick="toggleLang(this,'ar')"></button></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--b)"><div style="display:flex;align-items:center;gap:8px"><span>🇬🇧</span><span style="font-size:13px;font-weight:600;color:var(--wa)">אנגלית</span></div><button class="lang-tog" id="lang-en" onclick="toggleLang(this,'en')"></button></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0"><div style="display:flex;align-items:center;gap:8px"><span>🇷🇺</span><span style="font-size:13px;font-weight:600;color:var(--wa)">רוסית</span></div><button class="lang-tog" id="lang-ru" onclick="toggleLang(this,'ru')"></button></div>
+                <div style="padding:9px 11px;background:rgba(7,94,84,.06);border-radius:var(--rs);border:1.5px solid var(--b);font-size:11px;color:var(--wa)">✅ הבוט מזהה שפת הלקוח ועונה בה אוטומטית</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CATALOG -->
+      <div id="page-catalog" class="page">
+        <div class="g2">
+          <div class="card card-line">
+            <div class="ch"><div><div class="ct">💲 מחירון</div><div class="cs">סרוק מחירון או הקלד ידנית</div></div></div>
+            <div class="cb">
+              <div class="scan-zone">
+                <div style="color:var(--wa);font-size:28px;margin-bottom:8px">📸</div>
+                <div style="font-size:13px;font-weight:700;color:var(--wa);margin-bottom:4px">סרוק מחירון מתמונה</div>
+                <div style="font-size:11px;color:var(--ts);margin-bottom:12px">צלם את המחירון — ה-AI יקרא ויכניס אוטומטית</div>
+                <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+                  <label style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;background:var(--wa);color:#fff;border-radius:var(--rpill);font-size:12px;font-weight:700;cursor:pointer">📷 צלם<input type="file" accept="image/*" capture="environment" style="display:none" onchange="scanPricingImage(this)"></label>
+                  <label style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;background:#fff;color:var(--wa);border:1.5px solid var(--bs);border-radius:var(--rpill);font-size:12px;font-weight:700;cursor:pointer">🖼️ גלריה<input type="file" accept="image/*" style="display:none" onchange="scanPricingImage(this)"></label>
+                </div>
+                <div id="scanStatus" style="display:none;margin-top:10px;font-size:12px;font-weight:700;color:var(--wa)"></div>
+              </div>
+              <div style="font-size:11px;color:var(--ts);margin-bottom:7px">או הקלד ידנית — שורה לכל שירות:</div>
+              <textarea class="fta" id="pricingTextarea" style="min-height:160px;font-size:13px;line-height:2" placeholder="תספורת גבר ₪80&#10;פדיקור ₪120&#10;טיפול פנים ₪150" oninput="D.pricing=this.value;save()"></textarea>
+              <button class="btn btn-p" style="width:100%;justify-content:center;margin-top:10px;border-radius:var(--rpill)" onclick="savePricingText()">💾 שמור מחירון</button>
+            </div>
+          </div>
+          <div class="card card-line">
+            <div class="ch"><div><div class="ct">🏷️ מבצעים</div><div class="cs">הבוט יציע ללקוחות אוטומטית</div></div><button class="btn btn-p" style="font-size:11px;border-radius:var(--rpill)" onclick="addDeal()">+ מבצע</button></div>
+            <div class="cb">
+              <div id="dealsList">
+                <div class="empty" id="dealsEmpty"><div style="font-size:32px;margin-bottom:10px;color:var(--b)">%</div><div class="et" style="color:var(--wa)">טרם הגדרת מבצעים</div><div class="es">לחץ "+ מבצע" כדי להגדיל הכנסות!</div></div>
+              </div>
+              <button class="btn btn-p" style="width:100%;justify-content:center;margin-top:10px;border-radius:var(--rpill)" onclick="saveDeals()">💾 שמור מבצעים</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div id="page-settings" class="page">
+        <div class="g2">
+          <div class="card card-line">
+            <div class="ch"><div class="ct">⚙️ פרטי העסק</div></div>
+            <div class="cb">
+              <div class="fg">
+                <div class="fl">לוגו העסק</div>
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div id="logoPreview" style="width:60px;height:60px;border-radius:var(--rs);border:1.5px dashed var(--bs);background:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--ts);overflow:hidden;flex-shrink:0">🏪</div>
+                  <div style="flex:1">
+                    <label style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--wa);color:#fff;border-radius:var(--rpill);font-size:12px;font-weight:700;cursor:pointer">📷 העלה לוגו<input type="file" accept="image/*" style="display:none" onchange="uploadLogo(this)"></label>
+                    <div style="font-size:10px;color:var(--ts);margin-top:5px">הלוגו יישלח ללקוח עם ההודעה הראשונה</div>
+                  </div>
+                </div>
+              </div>
+              <div style="background:rgba(7,94,84,.05);border:1.5px solid var(--b);border-radius:var(--rs);padding:12px;margin-bottom:12px">
+                <div style="font-size:12px;font-weight:700;color:var(--wa);margin-bottom:8px">🔍 מילוי אוטומטי</div>
+                <div style="display:flex;gap:8px">
+                  <input class="fi" id="placesSearch" placeholder="שם העסק + עיר (למשל: מספרה אבי תל אביב)" style="flex:1;font-size:12px"/>
+                  <button onclick="fetchGooglePlaces()" style="padding:8px 14px;border-radius:var(--rpill);border:none;background:var(--wa);color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap">טען 🔍</button>
+                </div>
+                <div id="placesStatus" style="font-size:11px;color:var(--wa);margin-top:7px;display:none"></div>
+              </div>
+              <div class="fg"><div class="fl">שם העסק</div><input class="fi" id="bName" placeholder="שם העסק שלך" oninput="updName(this.value)" autocomplete="new-password" name="bx1"/></div>
+              <div class="fg"><div class="fl">תחום / סוג עסק</div><input class="fi" id="bType" placeholder="מסעדה, מספרה, מוסך..." oninput="D.type=this.value;save()" autocomplete="off" name="bx2"/></div>
+              <div class="fg"><div class="fl">כתובת</div><input class="fi" id="bAddr" placeholder="רחוב, עיר" oninput="D.addr=this.value;save()" autocomplete="new-password" name="bx3"/></div>
+              <div class="fr">
+                <div class="fg"><div class="fl">פתיחה</div><select class="fsel" id="bOpen" onchange="D.open=this.value;save()"><option>06:00</option><option>07:00</option><option>08:00</option><option>08:30</option><option selected>09:00</option><option>09:30</option><option>10:00</option><option>11:00</option><option>12:00</option></select></div>
+                <div class="fg"><div class="fl">סגירה</div><select class="fsel" id="bClose" onchange="D.close=this.value;save()"><option>13:00</option><option>14:00</option><option>15:00</option><option>16:00</option><option>17:00</option><option selected>18:00</option><option>19:00</option><option>20:00</option><option>21:00</option><option>22:00</option><option>23:00</option></select></div>
+              </div>
+              <div class="fg"><div class="fl">מידע נוסף לבוט</div><textarea class="fta" id="bExtra" placeholder="חניה, מדיניות ביטול, כל מה שחשוב שהבוט ידע..." oninput="D.extra=this.value;save()"></textarea></div>
+              <button class="btn btn-p" style="width:100%;justify-content:center;border-radius:var(--rpill)" onclick="saveSettings()">שמור ועדכן בוט ✓</button>
+            </div>
+          </div>
+          <div class="card card-line">
+            <div class="ch"><div class="ct">🤖 הגדרות בוט</div></div>
+            <div class="cb">
+              <div class="fg"><div class="fl">טון תשובות</div><select class="fsel" id="bTone" onchange="D.tone=this.value;save()"><option>חם וידידותי</option><option>מקצועי</option><option>רשמי</option><option>מכירתי</option></select></div>
+              <div class="fg"><div class="fl">שפת ברירת מחדל</div><select class="fsel"><option>עברית</option><option>ערבית</option><option>אנגלית</option></select></div>
+              <div class="fg"><div class="fl">זמינות</div><select class="fsel"><option>שעות עסקים</option><option>24/7</option></select></div>
+              <div class="fg"><div class="fl">הודעה כשסגור</div><textarea class="fta" id="bClosedMsg" placeholder="אנחנו סגורים כרגע..." oninput="D.closedMsg=this.value;save()"></textarea></div>
+              <div style="padding:9px 11px;border-radius:var(--rs);background:rgba(7,94,84,.06);border:1.5px solid var(--b);font-size:11px;color:var(--wa)">✅ מפתח ה-AI מאובטח</div>
+              <button class="btn btn-p" style="width:100%;justify-content:center;border-radius:var(--rpill);margin-top:10px" onclick="saveSettings()">שמור</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONNECT -->
+      <div id="page-connect" class="page">
+        <div class="card card-line" style="max-width:500px">
+          <div class="ch"><div><div class="ct">📱 חיבור וואטסאפ</div><div class="cs">לחיצה אחת — הבוט פעיל מיד</div></div></div>
+          <div class="cb">
+            <div style="text-align:center;padding:16px 0 24px">
+              <div style="font-size:50px;margin-bottom:12px">💬</div>
+              <div style="font-size:16px;font-weight:800;color:var(--wa);margin-bottom:8px">חבר את הבוט לוואטסאפ שלך</div>
+              <div style="font-size:13px;color:var(--ts);margin-bottom:22px;line-height:1.7">הזן את מספר הטלפון — וואטסאפ ייפתח ויבקש אישור</div>
+              <button onclick="connectWA()" style="width:100%;padding:15px;border-radius:var(--rpill);border:none;background:var(--wa);color:#fff;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;box-shadow:0 4px 20px rgba(7,94,84,.35);margin-bottom:16px">💬 התחבר עם וואטסאפ</button>
+              <div style="display:flex;flex-direction:column;gap:8px;text-align:right">
+                <div style="display:flex;gap:10px;align-items:center;padding:10px;border:1px solid var(--b);border-radius:var(--rs)"><div style="width:22px;height:22px;border-radius:50%;background:var(--wa);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div><div style="font-size:12px;font-weight:600;color:var(--wa)">לחץ על הכפתור</div></div>
+                <div style="display:flex;gap:10px;align-items:center;padding:10px;border:1px solid var(--b);border-radius:var(--rs)"><div style="width:22px;height:22px;border-radius:50%;background:var(--wa);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div><div style="font-size:12px;font-weight:600;color:var(--wa)">הזן מספר טלפון</div></div>
+                <div style="display:flex;gap:10px;align-items:center;padding:10px;border:1px solid var(--b);border-radius:var(--rs)"><div style="width:22px;height:22px;border-radius:50%;background:var(--wa);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div><div style="font-size:12px;font-weight:600;color:var(--wa)">אשר — הבוט פעיל ✅</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- LOCK -->
+  <div class="lock-ov" id="lockOv">
+    <div class="lock-card">
+      <div style="font-size:36px;margin-bottom:10px">🔒</div>
+      <div style="font-size:19px;font-weight:900;color:var(--wa);margin-bottom:5px">תקופת הניסיון הסתיימה</div>
+      <div style="font-size:13px;color:var(--ts);margin-bottom:16px">בחר תוכנית להמשיך</div>
+      <div class="lp-grid">
+        <div class="lp" onclick="choosePlan('free')"><div class="lp-name">🌱 חינמי</div><div class="lp-price">₪0<small style="font-size:11px;font-weight:400;color:var(--ts)">/חודש</small></div><div style="font-size:11px;color:var(--ts);margin-top:5px">100 שיחות</div></div>
+        <div class="lp f" onclick="choosePlan('pro')"><div class="lp-name">⭐ PRO</div><div class="lp-price">₪149<small style="font-size:11px;font-weight:400;color:var(--ts)">/חודש</small></div><div style="font-size:11px;color:var(--ts);margin-top:5px">הכל ללא הגבלה</div></div>
+      </div>
+      <button class="btn btn-s" style="width:100%;justify-content:center;padding:10px;border-radius:var(--rpill)" onclick="choosePlan('free')">המשך בחינמי</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toastEl"></div>
+
+
+
+<script>
+// ── TOAST ──
+function showToast(msg){const t=document.getElementById('toastEl');t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2800);}
+function showSaveBanner(msg){let b=document.getElementById('saveBanner');if(!b){b=document.createElement('div');b.id='saveBanner';b.style.cssText='position:fixed;top:0;left:0;right:0;background:var(--wa);color:#fff;text-align:center;padding:13px;font-size:14px;font-weight:800;z-index:999;transform:translateY(-100%);transition:transform .3s cubic-bezier(.34,1.56,.64,1);display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 20px rgba(7,94,84,.4)';document.body.appendChild(b);}b.innerHTML=`<span style="font-size:20px">✅</span> ${msg}`;b.style.transform='translateY(0)';setTimeout(()=>{b.style.transform='translateY(-100%)';},2500);}
+
+// ── STORAGE ──
+const SK='bizbot_v3';
+['bizbot_v1','bizbot_v2','bizbot_data_v1'].forEach(k=>localStorage.removeItem(k));
+let D={name:'',type:'',addr:'',open:'09:00',close:'18:00',extra:'',tone:'חם וידידותי',closedMsg:'',pricing:'',deals:'',persona:'biz',botOn:true,appts:{},alertCount:0,chatCount:0,revenue:0,apptCount:0,customers:{},dailySummary:'',hotLeads:[],logo:'',website:'',autoMenu:[]};
+function save(){try{localStorage.setItem(SK,JSON.stringify(D));}catch(e){}}
+function load(){try{const s=localStorage.getItem(SK);if(s)Object.assign(D,JSON.parse(s));}catch(e){}}
+const $e=id=>document.getElementById(id);
+const $t=(id,txt)=>{const e=$e(id);if(e)e.textContent=txt;};
+const $v=(id,fb='')=>{const e=$e(id);return e?e.value:fb;};
+
+function applyDataToForm(){
+  const set=(id,val)=>{const e=$e(id);if(e)e.value=val||'';};
+  set('bName',D.name);set('bType',D.type);set('bAddr',D.addr);
+  set('bOpen',D.open);set('bClose',D.close);
+  set('bExtra',D.extra);set('bTone',D.tone);set('bClosedMsg',D.closedMsg);
+  const pta=$e('pricingTextarea');if(pta&&D.pricing)pta.value=D.pricing;
+  if(D.name){$t('sbName',D.name);$t('chatName',D.name);}
+  if(D.logo){const prev=$e('logoPreview');if(prev)prev.innerHTML=`<img src="${D.logo}" style="width:100%;height:100%;object-fit:cover;border-radius:var(--rs)">`;}
+  const pc=$e('personaCurrent');if(pc)pc.textContent=D.persona==='biz'?'🏪 עסקי':'🏛️ ממשלתי';
+}
+
+
+function openApp(){
+  $e('landing').style.display='none';$e('app').style.display='block';
+  applyDataToForm();renderCRM();renderCal();updateKPIs();
+  chatHistory=[];welcomeSent=false;
+  showSaveBanner('🎉 ברוכים הבאים! 14 ימי ניסיון PRO התחילו');
+}
+
+function loginDirect(){openApp();}
+
+function goLanding(){$e('landing').style.display='block';$e('app').style.display='none';}
+
+// ── SEGMENT ──
+function setSeg(s){
+  $e('seg-biz').classList.toggle('on',s==='biz');
+  $e('seg-gov').classList.toggle('on',s==='gov');
+  if(s==='gov'){$t('heroTitle','הטמעת AI מותאמת אישית לארגונים ובנקים');$e('heroCTA').textContent='📞 תיאום פגישת אפיון';$e('heroDesc').textContent='פתרון מותאם לעיריות, בנקים וגופים ממשלתיים. אבטחה מלאה, SLA, ו-On-premise.';}
+  else{$t('heroTitle','בוט וואטסאפ שמוכר,\nמנהל, וזוכר הכל');$e('heroCTA').textContent='🚀 התחל 14 ימי ניסיון PRO';$e('heroDesc').textContent='BizBot עונה ללקוחות 24/7, קובע תורים, מציג מחירים — הכל אוטומטי.';}
+}
+
+// ── NAV ──
+const PM={dash:['לוח בקרה','סקירה כללית'],cal:['📅 יומן','ניהול תורים'],alerts:['🚨 התראות','לקוחות דורשים תשומת לב'],sim:['💬 סימולטור','בדוק את הבוט'],crm:['👥 לקוחות','שימור לקוחות וסיכום יומי'],catalog:['📋 מחירון ומבצעים','מה הבוט מציג'],settings:['⚙️ הגדרות עסק','פרטי העסק והבוט'],connect:['📱 חיבור וואטסאפ','הפעל את הבוט']};
+function nav(el,id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));
+  const pg=$e('page-'+id);if(pg)pg.classList.add('on');
+  const[t,s]=PM[id]||[id,''];$t('pgTitle',t);$t('pgSub',s);
+  if(el)el.classList.add('on');
+  if(window.innerWidth<=768)closeSB();
+}
+
+// ── SIDEBAR ──
+function openSB(){$e('sb').classList.add('open');$e('mov').classList.add('on');const b=$e('sbClose');if(b)b.style.display='flex';}
+function closeSB(){$e('sb').classList.remove('open');$e('mov').classList.remove('on');}
+
+// ── BOT TOGGLE ──
+function toggleBot(){
+  D.botOn=!D.botOn;save();
+  const tr=$e('togTr'),lb=$e('togLbl'),dt=$e('togDot'),mt=$e('mTog'),mth=$e('mThumb');
+  if(D.botOn){tr&&tr.classList.remove('off');if(lb){lb.textContent='בוט פעיל';lb.style.color='var(--wa)';}dt&&dt.classList.remove('off');if(mt)mt.style.background='var(--wa3)';if(mth)mth.style.transform='translateX(0)';showToast('✅ הבוט הודלק');}
+  else{tr&&tr.classList.add('off');if(lb){lb.textContent='בוט כבוי';lb.style.color='var(--ts)';}dt&&dt.classList.add('off');if(mt)mt.style.background='#d1d5db';if(mth)mth.style.transform='translateX(-14px)';showToast('⏸️ הבוט כובה');}
+}
+
+// ── PERSONA ──
+function setPersona(p){
+  D.persona=p;save();
+  const pc=$e('personaCurrent');if(pc)pc.textContent=p==='biz'?'🏪 עסקי':'🏛️ ממשלתי';
+  $t('pBadge',p==='biz'?'🏪 עסקי':'🏛️ ממשלתי');
+  $t('chatPersonaLbl',(p==='biz'?'🏪 עסקי':'🏛️ ממשלתי')+' · פעיל');
+  $t('welcomeMsg',p==='biz'?'היי! 👋 איך אפשר לעזור?':'שלום. ברוכים הבאים. במה אפשר לסייע?');
+}
+
+// ── LOGO ──
+function uploadLogo(input){
+  if(!input.files||!input.files[0])return;
+  const r=new FileReader();
+  r.onload=e=>{D.logo=e.target.result;save();const prev=$e('logoPreview');if(prev)prev.innerHTML=`<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover;border-radius:var(--rs)">`;showToast('✅ לוגו הועלה!');};
+  r.readAsDataURL(input.files[0]);
+}
+
+// ── GOOGLE PLACES AUTO-FILL ──
+async function fetchGooglePlaces(){
+  const query=$e('placesSearch')?.value?.trim();
+  if(!query){showToast('⚠️ כתוב שם עסק ועיר');return;}
+  const status=$e('placesStatus');
+  if(status){status.style.display='';status.textContent='⏳ סורק את העסק — זה לוקח כמה שניות...';}
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1200,
+        messages:[{role:'user',content:`אתה עוזר לבנות בוט וואטסאפ לעסק.
+חפש מידע על: "${query}"
+
+החזר JSON בלבד (ללא שום טקסט אחר):
+{
+  "name": "שם מלא",
+  "address": "כתובת מלאה",
+  "open": "09:00",
+  "close": "18:00",
+  "phone": "",
+  "type": "סוג העסק (מסעדה/מספרה/מוסך/קפה/וכו')",
+  "website": "כתובת אתר אם ידועה",
+  "menu": [
+    {"item": "שם מנה/שירות", "price": "מחיר במספר בלבד"},
+    {"item": "...", "price": "..."}
+  ],
+  "extra": "מידע נוסף שימושי לבוט"
+}
+
+אם יש מחירון/תפריט ידוע — כלול אותו ב-menu (לפחות 3-5 פריטים).
+אם לא ידוע — שים מערך ריק.`}]})});
+    const data=await res.json();const txt=data?.content?.[0]?.text;
+    if(!txt)throw new Error('no response');
+    const info=JSON.parse(txt.replace(/```json|```/g,'').trim());
+    if(info.name){const e=$e('bName');if(e){e.value=info.name;D.name=info.name;updName(info.name);}}
+    if(info.address){const e=$e('bAddr');if(e){e.value=info.address;D.addr=info.address;}}
+    if(info.type){const e=$e('bType');if(e){e.value=info.type;D.type=info.type;}}
+    if(info.open){const eo=$e('bOpen');if(eo){Array.from(eo.options).forEach(o=>{if(o.value.startsWith(info.open.slice(0,5)))o.selected=true;});D.open=info.open;}}
+    if(info.close){const ec=$e('bClose');if(ec){Array.from(ec.options).forEach(o=>{if(o.value.startsWith(info.close.slice(0,5)))o.selected=true;});D.close=info.close;}}
+    if(info.website){D.website=info.website;}
+    if(info.menu&&info.menu.length>0){
+      D.autoMenu=info.menu;
+      const lines=info.menu.map(m=>m.price?`${m.item} ₪${m.price}`:m.item).join('\n');
+      const ta=$e('pricingTextarea');if(ta){ta.value=lines;D.pricing=lines;}
+    }
+    const extraParts=[];
+    if(info.phone)extraParts.push('טלפון: '+info.phone);
+    if(info.website)extraParts.push('אתר: '+info.website);
+    if(info.extra)extraParts.push(info.extra);
+    if(extraParts.length){const e=$e('bExtra');if(e){e.value=extraParts.join('\n');D.extra=e.value;}}
+    save();chatHistory=[];welcomeSent=false;
+    if(status)status.textContent='✅ הבוט למד את העסק! לחץ "שמור" לאישור.';
+    showSaveBanner('🎉 '+(info.name||'העסק')+' נסרק בהצלחה! הבוט מוכן');
+  }catch(e){
+    console.error(e);
+    if(status)status.textContent='⚠️ לא הצלחתי לסרוק. מלא ידנית.';
+    showToast('⚠️ בדוק ידנית');
+  }
+}
+
+function applyManualPlaces(){}
+
+// ── SETTINGS ──
+function updName(v){if(v){$t('sbName',v);$t('chatName',v);D.name=v;save();}}
+function saveSettings(){
+  D.name=$v('bName')||D.name||'העסק שלי';D.type=$v('bType')||D.type;
+  D.addr=$v('bAddr')||D.addr;D.open=$v('bOpen','09:00');D.close=$v('bClose','18:00');
+  D.extra=$v('bExtra');D.tone=$v('bTone','חם וידידותי');D.closedMsg=$v('bClosedMsg');
+  updName(D.name);save();chatHistory=[];welcomeSent=false;showSaveBanner('הגדרות נשמרו! הבוט עודכן ✅');
+}
+
+// ── LOCK ──
+function showLock(){const o=$e('lockOv');if(o)o.classList.add('on');}
+function choosePlan(p){$e('lockOv').classList.remove('on');$t('sbPlan',p==='pro'?'✦ PRO':'חינמי');showToast(p==='pro'?'💎 שודרג ל-PRO!':'✅ ממשיך בחינמי');}
+
+// ── BIZ EMOJI ──
+function getBizEmoji(){
+  const t=(D.type||D.name||'').toLowerCase();
+  if(t.includes('מסעד')||t.includes('אוכל')||t.includes('קפה'))return{type:'restaurant',emoji:'🍽️',action:'הזמנת מקום'};
+  if(t.includes('מספר')||t.includes('תספורת'))return{type:'barber',emoji:'✂️',action:'תור'};
+  if(t.includes('מוסך')||t.includes('רכב'))return{type:'garage',emoji:'🔧',action:'תור'};
+  if(t.includes('רופא')||t.includes('קליניק'))return{type:'clinic',emoji:'🏥',action:'תור'};
+  if(t.includes('יופי')||t.includes('קוסמ')||t.includes('ציפורן'))return{type:'beauty',emoji:'💅',action:'תור'};
+  return{type:'general',emoji:'😊',action:'תור'};
+}
+
+// ── CALENDAR ──
+let calDate=new Date();
+function renderCal(){
+  const months=['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+  $t('calMonthTitle',months[calDate.getMonth()]+' '+calDate.getFullYear());
+  const first=new Date(calDate.getFullYear(),calDate.getMonth(),1).getDay();
+  const daysInMonth=new Date(calDate.getFullYear(),calDate.getMonth()+1,0).getDate();
+  const today=new Date();
+  const todayKey=`${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
+  let html='';
+  const prevDays=new Date(calDate.getFullYear(),calDate.getMonth(),0).getDate();
+  for(let i=0;i<first;i++)html+=`<div class="cd other"><span class="cd-num">${prevDays-first+i+1}</span></div>`;
+  for(let d=1;d<=daysInMonth;d++){
+    const key=`${calDate.getFullYear()}-${calDate.getMonth()}-${d}`;
+    const appts=D.appts[key]||[];const count=appts.length;
+    const cellDate=new Date(calDate.getFullYear(),calDate.getMonth(),d);
+    const iT=key===todayKey;
+    const isPastDay=cellDate<new Date(today.getFullYear(),today.getMonth(),today.getDate());
+    let cls='cd';
+    if(iT)cls+=' today';
+    if(isPastDay&&!iT)cls+=' past';
+    if(count>=5)cls+=' ha busy5';
+    else if(count>=3)cls+=' ha busy3';
+    else if(count>0)cls+=' ha';
+    const sub=count>0?`<span class="cd-count">${count} תור${count>1?'ים':''}</span>`:'';
+    html+=`<div class="${cls}" onclick="${isPastDay&&!iT?'':('selectDay('+d+')')}"><span class="cd-num">${d}</span>${sub}</div>`;
+  }
+  const cd=$e('calDays');if(cd)cd.innerHTML=html;
+}
+
+function changeMonth(d){calDate.setMonth(calDate.getMonth()+d);renderCal();}
+
+function apptCard(a,key,idx){
+  const biz=getBizEmoji();const isR=biz.type==='restaurant';
+  return`<div class="appt-row"><div class="appt-time">${a.time}</div><div class="appt-div"></div><div style="flex:1"><div class="appt-name">${isR?'🍽️':'✂️'} ${a.name}</div><div class="appt-svc">${a.svc}</div></div><span class="appt-badge">${isR?'מוזמן':'מאושר'}</span><button class="del-appt" onclick="deleteAppt('${key}',${idx})">✕</button></div>`;
+}
+
+function deleteAppt(key,idx){
+  if(!D.appts[key])return;const name=D.appts[key][idx]?.name||'';
+  D.appts[key].splice(idx,1);if(!D.appts[key].length)delete D.appts[key];
+  if(D.apptCount>0)D.apptCount--;save();updateKPIs();renderCal();updateTodayAppts();
+  showToast('🗑️ התור של '+name+' נמחק');
+}
+
+function selectDay(d){
+  document.querySelectorAll('#calDays .cd.selected').forEach(e=>e.classList.remove('selected'));
+  const allCells=document.querySelectorAll('#calDays .cd:not(.other)');
+  if(allCells[d-1])allCells[d-1].classList.add('selected');
+  const key=`${calDate.getFullYear()}-${calDate.getMonth()}-${d}`;
+  const cellDate=new Date(calDate.getFullYear(),calDate.getMonth(),d);
+  const dateLabel=cellDate.toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'long'});
+  $t('calDayT',dateLabel);
+  const ap=D.appts[key]||[];const sorted=[...ap].sort((a,b)=>a.time.localeCompare(b.time));
+  const el=$e('calAppts');if(!el)return;
+  let html='';
+  if(!sorted.length){
+    html=`<div class="appt-drawer open"><div class="drawer-head"><span class="drawer-title">📅 ${dateLabel}</span><span class="drawer-badge">פנוי ✅</span></div><div class="drawer-empty"><div style="font-size:28px;margin-bottom:8px">🌿</div><div style="font-weight:700;color:var(--wa);margin-bottom:4px">יום פנוי!</div></div></div>`;
+  }else{
+    const total=sorted.length;const badgeTxt=total>=5?`עמוס מאוד 🔴 ${total}`:total>=3?`עמוס 🟡 ${total}`:total+' תורים ✅';
+    const rows=sorted.map(a=>{const origIdx=ap.indexOf(a);return`<div class="drawer-row"><span class="drawer-time">${a.time}</span><div style="flex:1"><div class="drawer-name">${a.name}</div><div class="drawer-svc">${a.svc||'תור'}</div></div><button class="drawer-send" onclick="sendToCustomer('${a.name}','${a.time}')">💬 שלח</button><button class="del-appt" style="margin-right:6px" onclick="deleteAppt('${key}',${origIdx})">✕</button></div>`;}).join('');
+    html=`<div class="appt-drawer"><div class="drawer-head"><span class="drawer-title">📅 ${dateLabel}</span><span class="drawer-badge">${badgeTxt}</span></div>${rows}</div>`;
+  }
+  el.innerHTML=html;
+  requestAnimationFrame(()=>{const drawer=el.querySelector('.appt-drawer');if(drawer&&!drawer.classList.contains('open'))requestAnimationFrame(()=>drawer.classList.add('open'));});
+}
+
+function sendToCustomer(name,time){nav(null,'sim');setTimeout(()=>{const inp=$e('chatIn');if(inp){inp.value=`תזכורת ל${name} לתור ב-${time}`;inp.focus();}},300);}
+
+function addApptP(){
+  const name=prompt('שם הלקוח:');if(!name)return;
+  const svc=prompt('שירות:')||'תור';const time=prompt('שעה:')||'10:00';
+  const t=new Date(),key=`${t.getFullYear()}-${t.getMonth()}-${t.getDate()}`;
+  if(!D.appts[key])D.appts[key]=[];
+  D.appts[key].push({name,svc,time});D.apptCount++;D.revenue+=100;
+  save();updateKPIs();renderCal();updateTodayAppts();showToast('✅ תור נוסף ל'+name+'!');
+}
+
+function updateKPIs(){
+  $t('k-chats',D.chatCount);$t('k-appts',D.apptCount);
+  $t('k-rev','₪'+D.revenue.toLocaleString());$t('k-alerts',D.alertCount);
+  if(D.alertCount>0){const ka=$e('k-alerts');if(ka)ka.style.color='var(--red)';const b=$e('alertBadge');if(b){b.style.display='';b.textContent=D.alertCount;}}
+}
+
+function updateTodayAppts(){
+  const t=new Date(),key=`${t.getFullYear()}-${t.getMonth()}-${t.getDate()}`;
+  const ap=D.appts[key]||[];const el=$e('todayAppts');if(!el)return;
+  el.innerHTML=ap.length?ap.map((a,i)=>apptCard(a,key,i)).join(''):'<div class="empty"><div class="ei">📅</div><div class="et">אין תורים היום</div><div class="es">קבע תור ראשון</div></div>';
+}
+
+// ── PRICING ──
+function scanPricingImage(input){
+  if(!input.files||!input.files[0])return;
+  const file=input.files[0];const status=$e('scanStatus');
+  if(status){status.style.display='';status.textContent='⏳ קורא את המחירון...';}
+  const r=new FileReader();
+  r.onload=async e=>{
+    const base64=e.target.result.split(',')[1];const mediaType=file.type||'image/jpeg';
+    try{
+      const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,messages:[{role:'user',content:[{type:'image',source:{type:'base64',media_type:mediaType,data:base64}},{type:'text',text:'חלץ שירותים ומחירים. החזר רשימה: "שם ₪מחיר" לכל שורה. רק הרשימה.'}]}]})});
+      const data=await res.json();const result=data?.content?.[0]?.text;
+      if(result){const ta=$e('pricingTextarea');if(ta){const ex=ta.value.trim();ta.value=ex?ex+'\n'+result:result;D.pricing=ta.value;save();}if(status)status.textContent='✅ המחירון עודכן!';showToast('✅ מחירון נסרק!');}
+      else{if(status)status.textContent='⚠️ לא הצלחתי לקרוא.';}
+    }catch(err){if(status)status.textContent='❌ שגיאת חיבור';}
+    input.value='';
+  };
+  r.readAsDataURL(file);
+}
+function savePricingText(){const ta=$e('pricingTextarea');if(!ta||!ta.value.trim()){showToast('⚠️ כתוב שירות אחד לפחות');return;}D.pricing=ta.value.trim();save();chatHistory=[];showSaveBanner('מחירון נשמר! ✅');}
+
+// ── DEALS ──
+function addDeal(){
+  const emojis=['🔥','🎁','⚡','🌟','💎'];const em=emojis[Math.floor(Math.random()*emojis.length)];
+  $e('dealsEmpty').style.display='none';
+  $e('dealsList').insertAdjacentHTML('beforeend',`<div style="background:#fff;border:1.5px solid var(--b);border-radius:var(--rs);padding:12px;margin-bottom:8px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px">
+      <div style="display:flex;align-items:center;gap:7px"><span style="font-size:16px">${em}</span><input class="fi" placeholder="שם המבצע" style="border:none;background:transparent;padding:0;font-weight:700;font-size:13px;width:160px"/></div>
+      <div style="display:flex;gap:6px;align-items:center"><button class="deal-tog" onclick="this.classList.toggle('off');showToast('✅ עודכן')"></button><button onclick="this.closest('div[style]').remove();showToast('🗑️ הוסר')" style="background:var(--redbg);color:var(--red);border:1px solid rgba(220,38,38,.2);border-radius:6px;padding:4px 8px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit">✕</button></div>
+    </div>
+    <div class="fr" style="margin-bottom:7px"><div class="fg"><div class="fl">שירות/מוצר</div><input class="fi" placeholder="שם השירות"/></div><div class="fg"><div class="fl">מחיר מבצע ₪</div><input class="fi" type="number" placeholder="0"/></div></div>
+    <div class="fg"><div class="fl">תיאור (הבוט ישלח ללקוח)</div><textarea class="fta" placeholder="תאר את המבצע..." style="min-height:44px"></textarea></div>
+    <div class="fr" style="margin-top:7px"><div class="fg"><div class="fl">מתאריך</div><input class="fi" type="date"/></div><div class="fg"><div class="fl">עד תאריך</div><input class="fi" type="date"/></div></div>
+  </div>`);showToast('🏷️ מבצע נוסף');
+}
+function getDealsText(){const cards=document.querySelectorAll('#dealsList > div');const lines=[];cards.forEach(c=>{const tog=c.querySelector('.deal-tog');if(!tog?.classList.contains('off')){const ta=c.querySelector('.fta');if(ta?.value?.trim())lines.push(ta.value.trim());}});return lines.join('\n');}
+function saveDeals(){D.deals=getDealsText();save();chatHistory=[];showSaveBanner('מבצעים נשמרו! ✅');}
+
+// ── WHATSAPP ──
+function connectWA(){
+  let modal=$e('waModal');
+  if(!modal){modal=document.createElement('div');modal.id='waModal';modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)';
+  modal.innerHTML=`<div style="background:#fff;border-radius:var(--r);padding:28px;max-width:360px;width:92%;text-align:center;box-shadow:var(--sh3)">
+    <div style="font-size:44px;margin-bottom:12px">💬</div>
+    <div style="font-size:18px;font-weight:900;color:var(--wa);margin-bottom:6px">חבר לוואטסאפ</div>
+    <div style="font-size:13px;color:var(--ts);margin-bottom:18px">הזן את מספר הטלפון של העסק</div>
+    <input id="waNumInput" type="tel" placeholder="050-123-4567" style="width:100%;border:1.5px solid var(--b);border-radius:var(--rs);padding:12px 14px;font-size:16px;text-align:center;outline:none;font-family:inherit;margin-bottom:14px;direction:ltr"/>
+    <button onclick="doConnectWA()" style="width:100%;padding:13px;border-radius:var(--rpill);border:none;background:var(--wa);color:#fff;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;margin-bottom:10px">💬 פתח וואטסאפ</button>
+    <button onclick="$e('waModal').style.display='none'" style="width:100%;padding:10px;border-radius:var(--rpill);border:1.5px solid var(--b);background:transparent;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;color:var(--ts)">ביטול</button>
+  </div>`;document.body.appendChild(modal);}
+  modal.style.display='flex';setTimeout(()=>{const i=$e('waNumInput');if(i)i.focus();},100);
+}
+function doConnectWA(){
+  const input=$e('waNumInput');if(!input||!input.value.trim()){if(input)input.style.borderColor='var(--red)';return;}
+  let n=input.value.replace(/[\s\-\+\(\)]/g,'');if(n.startsWith('0'))n='972'+n.slice(1);if(!n.startsWith('972'))n='972'+n;
+  const msg=encodeURIComponent(`היי! 👋 ${D.name||'הבוט שלנו'} כאן.`);
+  window.open(`https://wa.me/${n}?text=${msg}`,'_blank');
+  $e('waModal').style.display='none';showSaveBanner('וואטסאפ נפתח! 💬');
+}
+
+// ── CRM ──
+let enabledLangs={ar:true,en:true,ru:true};
+function toggleLang(el,lang){enabledLangs[lang]=!enabledLangs[lang];el.classList.toggle('off');showToast((enabledLangs[lang]?'✅ ':'⏸️ ')+lang.toUpperCase()+' '+(enabledLangs[lang]?'הופעל':'כובה'));}
+function detectLang(m){if(/[\u0600-\u06FF]/.test(m))return'ar';if(/[\u0400-\u04FF]/.test(m))return'ru';if(/[a-zA-Z]{3,}/.test(m)&&!/[\u0590-\u05FF]/.test(m))return'en';return'he';}
+function getLangInstruction(lang){return{ar:'ענה בערבית בלבד',en:'Reply in English only',ru:'Отвечай только на русском',he:''}[lang]||'';}
+function saveCRMCustomer(name,svc,phone=''){
+  if(!D.customers)D.customers={};const key=name.trim().toLowerCase();const ex=D.customers[key];
+  D.customers[key]={name:name.trim(),phone:phone||ex?.phone||'',svc,lastVisit:new Date().toISOString(),visits:(ex?.visits||0)+1,msgSent:false};
+  save();renderCRM();
+}
+function renderCRM(){
+  const list=$e('crmList');if(!list)return;
+  const customers=D.customers||{};const keys=Object.keys(customers);
+  if(!keys.length){const e=$e('crmEmpty');if(e)e.style.display='';return;}
+  const e=$e('crmEmpty');if(e)e.style.display='none';
+  const now=new Date();
+  list.innerHTML=keys.map(k=>{const c=customers[k];const last=new Date(c.lastVisit);const days=Math.floor((now-last)/(1000*60*60*24));const inactive=days>=28;
+    return`<div style="display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid var(--b)">
+      <div style="width:34px;height:34px;border-radius:50%;background:var(--wa);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex-shrink:0">${c.name.charAt(0)}</div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--wa)">${c.name}</div><div style="font-size:11px;color:var(--ts)">${c.svc} · ${days===0?'היום':`לפני ${days} ימים`} · ${c.visits} ביקורים</div></div>
+      ${inactive?`<button onclick="sendRetention('${k}')" style="background:var(--wa);color:#fff;border:none;border-radius:var(--rpill);padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit">📨 שלח</button>`:`<span style="font-size:10px;font-weight:700;background:rgba(7,94,84,.08);color:var(--wa);padding:2px 9px;border-radius:var(--rpill)">פעיל</span>`}
+    </div>`;}).join('');
+}
+function sendRetention(key){
+  const c=(D.customers||{})[key];if(!c)return;
+  const biz=getBizEmoji();const msg=`היי ${c.name}! 😊 עבר זמן מאז הביקור האחרון ב${D.name||'אצלנו'}. ${biz.emoji}`;
+  const phone=c.phone?c.phone.replace(/[\s\-]/g,''):'';
+  if(phone){let n=phone.startsWith('0')?'972'+phone.slice(1):phone;window.open(`https://wa.me/${n}?text=${encodeURIComponent(msg)}`,'_blank');}
+  else navigator.clipboard?.writeText(msg).then(()=>showToast('📋 הועתק!'));
+  if(D.customers[key])D.customers[key].msgSent=true;save();renderCRM();showToast('📨 הודעה נשלחה ל'+c.name+'!');
+}
+function addManualCustomer(){const name=prompt('שם הלקוח:');if(!name)return;const svc=prompt('שירות:')||'ביקור';const phone=prompt('טלפון (אופציונלי):')||'';saveCRMCustomer(name,svc,phone);showToast('✅ לקוח נוסף!');}
+
+// ── DAILY ANALYTICS ──
+function generateDailySummary(){
+  const today=new Date();const key=`${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
+  const todayAppts=(D.appts[key]||[]).length;const chats=D.chatCount||0;const hotLeads=(D.hotLeads||[]).length;
+  const moneySaved=(chats*2.5).toFixed(0);const savedHours=(chats*3/60).toFixed(1);
+  const lines=[`📊 *סיכום יום ${today.toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'long'})}*`,'─────────────────',`💬 ${chats} הודעות ענה הבוט`];
+  if(todayAppts>0)lines.push(`📅 ${todayAppts} תורים`);
+  if(hotLeads>0)lines.push(`🔥 ${hotLeads} לידים חמים`);
+  lines.push('─────────────────',`💰 *חסכת כ-${moneySaved} ₪* (${savedHours} שעות)`);
+  if(D.revenue>0)lines.push(`🏆 הכנסות: ₪${D.revenue.toLocaleString()}`);
+  const sum=lines.join('\n');
+  const box=$e('dailySummaryBox');if(box)box.innerHTML=sum.replace(/\n/g,'<br>').replace(/\*(.*?)\*/g,'<strong>$1</strong>');
+  D.dailySummary=sum;save();
+}
+function copySummary(){navigator.clipboard?.writeText(D.dailySummary||'').then(()=>showToast('📋 הועתק!'));}
+
+// ── APPOINTMENT FLOW ──
+let apptStep=null,apptData={};
+
+function resolveDateKey(day,time){
+  const now=new Date();const dayNames=['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
+  let target=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  if(day==='מחר')target.setDate(target.getDate()+1);
+  else if(day==='מחרתיים')target.setDate(target.getDate()+2);
+  else{const td=dayNames.indexOf(day);if(td!==-1){let diff=td-now.getDay();if(diff<=0)diff+=7;target.setDate(target.getDate()+diff);}}
+  const key=`${target.getFullYear()}-${target.getMonth()}-${target.getDate()}`;
+  const label=target.toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'long'});
+  return{key,label,date:target};
+}
+function isPast(dateObj,time){const now=new Date();const[h,m]=time.split(':').map(Number);return new Date(dateObj.getFullYear(),dateObj.getMonth(),dateObj.getDate(),h,m)<now;}
+function isTimeTaken(key,time){return(D.appts[key]||[]).some(a=>a.time===time);}
+function findNextSlot(key,time){
+  const slots=['09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00'];
+  const taken=(D.appts[key]||[]).map(a=>a.time);const idx=slots.indexOf(time);
+  for(let i=idx+1;i<slots.length;i++){if(!taken.includes(slots[i]))return slots[i];}
+  for(let i=0;i<idx;i++){if(!taken.includes(slots[i]))return slots[i];}return null;
+}
+function extractDayTime(m){
+  const txt=m.trim();const dayMap={ראשון:'ראשון',שני:'שני',שלישי:'שלישי',רביעי:'רביעי',חמישי:'חמישי',שישי:'שישי',שבת:'שבת',מחר:'מחר',מחרתיים:'מחרתיים',היום:'היום'};
+  let day='';for(const[k,v]of Object.entries(dayMap)){if(txt.includes(k)){day=v;break;}}
+  let hour=null,min='00';
+  const hhmm=txt.match(/(\d{1,2}):(\d{2})/);if(hhmm){hour=parseInt(hhmm[1]);min=hhmm[2];}
+  if(hour===null){const wp=txt.match(/(\d{1,2})\s*(בערב|בלילה|בצהריים|בבוקר)/);if(wp){hour=parseInt(wp[1]);if((wp[2]==='בערב'||wp[2]==='בלילה')&&hour<12)hour+=12;}}
+  if(hour===null){const s=txt.match(/(?:בשעה|ב[- ]?)(\d{1,2})(?!\d|:)/);if(s){hour=parseInt(s[1]);if(txt.includes('בערב')&&hour<12)hour+=12;}}
+  let time='';if(hour!==null)time=`${hour}:${min.toString().padStart(2,'0')}`;
+  return{day,time};
+}
+
+// ── BOT REPLY ──
+let chatHistory=[],welcomeSent=false;
+async function botReply(m){
+  const lang=detectLang(m);const langInstr=(lang!=='he'&&enabledLangs[lang])?getLangInstruction(lang):'';
+  if(!welcomeSent){welcomeSent=true;const biz=D.name||'העסק שלנו';if(/^(היי|הי|שלום|אהלן|הלו|hi|hey)/i.test(m.trim()))return`שלום! 👋 הגעת ל${biz}. במה אוכל לעזור?`;}
+  if(apptStep==='name'){apptData.name=m.trim();apptStep='when';return`תודה ${apptData.name}! 😊\nמתי נוח לך?`;}
+  if(apptStep==='when'){
+    const{day:d2,time:t2}=extractDayTime(m);if(d2)apptData.day=d2;if(t2)apptData.time=t2;
+    if(!apptData.time)return`באיזו שעה? למשל: 10:00, 14:00`;
+    const{key:dk,label:dl,date:cd2}=resolveDateKey(apptData.day||'',apptData.time);apptData.dateKey=dk;apptData.dateLabel=dl;
+    if(isPast(cd2,apptData.time))return`מצטער, הזמן הזה כבר עבר ⏰\nתרצה ליום אחר?`;
+    if(isTimeTaken(dk,apptData.time)){const alt=findNextSlot(dk,apptData.time);if(alt)apptData.time=alt;return`${t2||apptData.time} תפוס${alt?` — יש פנוי ב-${alt} 😊`:''}`;}
+    apptStep='confirm';const biz2=getBizEmoji();return`מעולה! אני רושם:\n${biz2.emoji} ${apptData.name}\n📅 ${dl}\n🕐 ${apptData.time}\n\nלאשר? שלח *כן* ✅`;
+  }
+  if(apptStep==='confirm'){
+    const yes=m.trim().toLowerCase();
+    if(['כן','yes','אשר','בסדר','סבבה','אוקי','ok','יאה','יופי'].includes(yes)){
+      apptStep=null;const key=apptData.dateKey;
+      if(!D.appts[key])D.appts[key]=[];
+      D.appts[key].push({name:apptData.name,svc:apptData.svc||getBizEmoji().action,time:apptData.time});
+      D.apptCount++;D.revenue+=100;save();updateKPIs();renderCal();updateTodayAppts();
+      saveCRMCustomer(apptData.name,apptData.svc||getBizEmoji().action);
+      showToast('📅 תור נקבע ל'+apptData.name+'!');
+      const biz3=getBizEmoji();return`✅ ${biz3.type==='restaurant'?'המקום שמור':'התור נקבע'}!\n${biz3.emoji} ${apptData.name} — ${apptData.dateLabel} ${apptData.time}\nנשמח לראותך! 😊`;
+    }else{apptStep=null;return`בסדר, ביטלתי 🙏 כשתרצה — כתוב לי!`;}
+  }
+  const l=m.toLowerCase();
+  if(l.includes('עצבני')||l.includes('כועס')||l.includes('לא מרוצה')||l.includes('גרוע')||l.includes('נורא')){
+    D.alertCount++;const ae=$e('alertsEmpty');if(ae)ae.style.display='none';
+    const al=$e('alertsList');if(al)al.insertAdjacentHTML('beforeend',`<div class="ali"><div class="ali-dot"></div><div><div style="font-size:13px;font-weight:800;color:var(--t);margin-bottom:2px">לקוח לא מרוצה</div><div style="font-size:11px;color:var(--ts);margin-bottom:3px">"${m}"</div><button class="btn btn-p" style="font-size:11px;border-radius:var(--rpill)" onclick="showToast('📱 נשלח!')">שלח מענה</button></div></div>`);
+    save();updateKPIs();showToast('🚨 התראה! לקוח לא מרוצה');
+  }
+  if(l.includes('תור')||l.includes('לקבוע')||l.includes('להזמין')||l.includes('שולחן')||l.includes('מקום')){
+    const{day,time}=extractDayTime(m);const biz=getBizEmoji();
+    apptData={name:'',svc:'',day,time};apptStep='name';
+    return`שמחים ${biz.type==='restaurant'?'לשמור לך מקום':'לקבוע לך תור'}! ${biz.emoji}\nמה שמך?`;
+  }
+  const pricing=D.pricing?`\n\nמחירון:\n${D.pricing}`:'';
+  const autoMenuStr=(D.autoMenu&&D.autoMenu.length>0)?'\n\nמחירון:\n'+D.autoMenu.map(x=>x.price?`${x.item} — ₪${x.price}`:x.item).join('\n'):'';
+  const menuBlock=autoMenuStr||pricing;
+  const deals=D.deals?`\n\nמבצעים:\n${D.deals}`:'';
+  const biz=getBizEmoji();
+  const system=`אתה נציג שירות של "${D.name||'העסק'}" — ${D.type||'עסק'} — בוואטסאפ.
+שעות: ${D.open||'09:00'}–${D.close||'18:00'}.${D.addr?'\nכתובת: '+D.addr:''}${D.extra?'\nמידע: '+D.extra:''}${menuBlock}${deals}
+כללי: קצר וחם. תשובות 1-2 שורות. מחיר מהמחירון — אל תמציא. ${langInstr?'⚠️ '+langInstr:''}`;
+  chatHistory.push({role:'user',content:m});
+  if(chatHistory.length>20)chatHistory=chatHistory.slice(-20);
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:200,system,messages:chatHistory})});
+    const data=await res.json();const reply=data?.content?.[0]?.text;
+    if(reply){chatHistory.push({role:'assistant',content:reply});return reply;}
+  }catch(e){}
+  if(l.includes('שעות')||l.includes('פתוח'))return`פתוחים ${D.open||'09:00'}–${D.close||'18:00'} 🕐`;
+  if(D.addr&&(l.includes('איפה')||l.includes('כתובת')))return D.addr+' 📍';
+  if(l.includes('מחיר')||l.includes('כמה'))return D.pricing||'שלח הודעה ונשלח לך מחירים 😊';
+  return`אהלן! ${biz.emoji} במה אפשר לעזור?`;
+}
+
+// ── CHAT ──
+function addBubble(t,r){const w=$e('chatMsgs');if(!w)return;const tm=new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'});w.innerHTML+=`<div class="msg ${r}"><div class="mb">${t.replace(/\n/g,'<br>')}</div><div class="mt">${tm}</div></div>`;w.scrollTop=w.scrollHeight;}
+function showTyping(){const lid='ld_'+Date.now();const w=$e('chatMsgs');if(w){w.innerHTML+=`<div id="${lid}" class="msg bot"><div class="mb" style="display:flex;gap:4px;align-items:center"><span style="width:7px;height:7px;border-radius:50%;background:var(--wa3);display:inline-block;animation:bounce .9s infinite 0s"></span><span style="width:7px;height:7px;border-radius:50%;background:var(--wa3);display:inline-block;animation:bounce .9s infinite .2s"></span><span style="width:7px;height:7px;border-radius:50%;background:var(--wa3);display:inline-block;animation:bounce .9s infinite .4s"></span></div></div>`;w.scrollTop=w.scrollHeight;}return lid;}
+async function sendMsg(){const i=$e('chatIn');if(!i)return;const m=i.value.trim();if(!m)return;i.value='';addBubble(m,'user');D.chatCount++;save();updateKPIs();const lid=showTyping();const reply=await botReply(m);const ld=$e(lid);if(ld)ld.remove();addBubble(reply,'bot');}
+async function quickTest(m){addBubble(m,'user');D.chatCount++;save();updateKPIs();const lid=showTyping();const reply=await botReply(m);const ld=$e(lid);if(ld)ld.remove();addBubble(reply,'bot');}
+
+// ── DEMO LANDING ──
+function demoAddBubble(t,r){const w=$e('demoChatMsgs');if(!w)return;const tm=new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'});const isU=r==='user';w.innerHTML+=`<div class="cm ${isU?'u':'b'}"><div class="cm-b">${t.replace(/\n/g,'<br>')}</div><div class="cm-t">${tm}</div></div>`;w.scrollTop=w.scrollHeight;}
+function showDemoTyping(){const lid='dld_'+Date.now();const w=$e('demoChatMsgs');if(w){w.innerHTML+=`<div id="${lid}" style="align-self:flex-start;background:#fff;padding:9px 12px;border-radius:10px;display:flex;gap:4px;align-items:center"><span style="width:6px;height:6px;border-radius:50%;background:var(--wa3);display:inline-block;animation:bounce .9s infinite 0s"></span><span style="width:6px;height:6px;border-radius:50%;background:var(--wa3);display:inline-block;animation:bounce .9s infinite .2s"></span><span style="width:6px;height:6px;border-radius:50%;background:var(--wa3);display:inline-block;animation:bounce .9s infinite .4s"></span></div>`;w.scrollTop=w.scrollHeight;}return lid;}
+async function demoSend(){const i=$e('demoInput');if(!i)return;const m=i.value.trim();if(!m)return;i.value='';demoAddBubble(m,'user');const lid=showDemoTyping();const r=await botReply(m);const ld=$e(lid);if(ld)ld.remove();demoAddBubble(r,'b');}
+async function demoQ(m){demoAddBubble(m,'user');const lid=showDemoTyping();const r=await botReply(m);const ld=$e(lid);if(ld)ld.remove();demoAddBubble(r,'b');}
+
+// ── TOUCH ──
+document.addEventListener('DOMContentLoaded',()=>{const sb=$e('sb');if(sb){let tx=0;sb.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});sb.addEventListener('touchend',e=>{if(e.changedTouches[0].clientX-tx>60)closeSB();},{passive:true});}});
+
+// ── INIT ──
+load();applyDataToForm();updateKPIs();renderCal();renderCRM();setPersona(D.persona||'biz');
+const today0=new Date();$t('todaySub',today0.toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'long'}));updateTodayAppts();
+if(!D.botOn)toggleBot();
+</script>
+</body>
+</html>
